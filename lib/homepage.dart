@@ -115,7 +115,6 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.primary,
         title: Text(
           widget.title,
           style: const TextStyle(color: Colors.white),
@@ -132,6 +131,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 20),
+
+
               TextField(
                 readOnly: true,
                 controller: TextEditingController(text: _wifiStatus),

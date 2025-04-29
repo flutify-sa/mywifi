@@ -68,31 +68,37 @@ class _WifiStatusScreenState extends State<WifiStatusScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return Scaffold(backgroundColor: Colors.grey.shade300,
       appBar: AppBar(
-        backgroundColor: Theme.of(context).colorScheme.primary,
+        backgroundColor: Colors.grey.shade300,centerTitle: true,
         title: Text(
           widget.title,
-          style: const TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.black),
         ),
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              const HeaderText(text: 'WiFi Connection Status:'),
-              const SizedBox(height: 20),
-              StatusTextField(text: _wifiStatus, label: 'Status'),
-              const SizedBox(height: 20),
-              const HeaderText(text: 'Current WiFi SSID:'),
-              const SizedBox(height: 20),
-              StatusTextField(text: _wifiName, label: 'SSID'),
-            ],
-          ),
+     body: Center(
+  child: Padding(
+    padding: const EdgeInsets.all(20.0),
+    child: Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+        Image.asset(
+          'assets/wifi.png',
+          height: 150, // optional
         ),
-      ),
+        const SizedBox(height: 20),
+        const HeaderText(text: 'WiFi Connection Status:'),
+        const SizedBox(height: 20),
+        StatusTextField(text: _wifiStatus, label: 'Status'),
+        const SizedBox(height: 20),
+        const HeaderText(text: 'Current WiFi SSID:'),
+        const SizedBox(height: 20),
+        StatusTextField(text: _wifiName, label: 'SSID'),
+      ],
+    ),
+  ),
+),
+
       floatingActionButton: FloatingActionButton(
         onPressed: _checkWifiStatus,
         tooltip: 'Refresh',
