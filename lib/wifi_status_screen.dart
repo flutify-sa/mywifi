@@ -76,7 +76,7 @@ class _WifiStatusScreenState extends State<WifiStatusScreen> {
           style: const TextStyle(color: Colors.black),
         ),
       ),
-     body: Center(
+   body: Center(
   child: Padding(
     padding: const EdgeInsets.all(20.0),
     child: Column(
@@ -84,20 +84,44 @@ class _WifiStatusScreenState extends State<WifiStatusScreen> {
       children: <Widget>[
         Image.asset(
           'assets/wifi.png',
-          height: 150, // optional
+          height: 150,
         ),
         const SizedBox(height: 20),
         const HeaderText(text: 'WiFi Connection Status:'),
         const SizedBox(height: 20),
-        StatusTextField(text: _wifiStatus, label: 'Status'),
+
+        // Status Container
+        Container(
+          width: MediaQuery.of(context).size.width * 0.7,
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          decoration: BoxDecoration(
+            color: Colors.grey.shade200,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: Colors.grey.shade400),
+          ),
+          child: StatusTextField(text: _wifiStatus, label: 'Status'),
+        ),
+
         const SizedBox(height: 20),
         const HeaderText(text: 'Current WiFi SSID:'),
         const SizedBox(height: 20),
-        StatusTextField(text: _wifiName, label: 'SSID'),
+
+        // SSID Container
+        Container(
+          width: MediaQuery.of(context).size.width * 0.7,
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+          decoration: BoxDecoration(
+            color: Colors.grey.shade200,
+            borderRadius: BorderRadius.circular(12),
+            border: Border.all(color: Colors.grey.shade400),
+          ),
+          child: StatusTextField(text: _wifiName, label: 'SSID'),
+        ),
       ],
     ),
   ),
 ),
+
 
       floatingActionButton: FloatingActionButton(
         onPressed: _checkWifiStatus,
