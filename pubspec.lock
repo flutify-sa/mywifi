@@ -110,6 +110,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.0.0"
+  flutter_signal_strength:
+    dependency: "direct main"
+    description:
+      name: flutter_signal_strength
+      sha256: fca707eb6d579a06fa612915e3e3c0271cafec77d26e3d80a084be285548b598
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.1"
   flutter_test:
     dependency: "direct dev"
     description: flutter
