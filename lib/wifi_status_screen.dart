@@ -7,6 +7,7 @@ import '../wifi_status_widgets.dart';
 import 'package:flutter_signal_strength/flutter_signal_strength.dart';
 import 'dart:io' show Platform;
 import 'package:permission_handler/permission_handler.dart';
+import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
 class WifiStatusScreen extends StatefulWidget {
   const WifiStatusScreen({super.key, required this.title});
@@ -93,7 +94,7 @@ class _WifiStatusScreenState extends State<WifiStatusScreen> {
     try {
       final int? signalLevel = await _signalStrengthPlugin.getWifiSignalStrength();
       if (mounted) {
-         setState(() {
+        setState(() {
           _wifiSignalStrength = signalLevel;
           print('WiFi Signal Strength (dBm): $_wifiSignalStrength'); // For debugging
         });
@@ -105,6 +106,18 @@ class _WifiStatusScreenState extends State<WifiStatusScreen> {
           _wifiSignalStrength = null;
         });
       }
+    }
+  }
+
+  List<Color> _getSignalStrengthColors(int? signalStrength) {
+    if (signalStrength == null) {
+      return [Colors.grey, Colors.grey];
+    } else if (signalStrength >= -50) {
+      return [Colors.green.shade400, Colors.lime.shade400];
+    } else if (signalStrength >= -70) {
+      return [Colors.orange.shade400, Colors.yellow.shade400];
+    } else {
+      return [Colors.red.shade400, Colors.deepOrange.shade400];
     }
   }
 
@@ -159,13 +172,32 @@ class _WifiStatusScreenState extends State<WifiStatusScreen> {
               const SizedBox(height: 20),
               const HeaderText(text: 'WiFi Signal Strength:'),
               const SizedBox(height: 20),
-              Text(
-                _wifiSignalStrength != null
-                    ? 'dBm: $_wifiSignalStrength'
-                    : 'Not available',
-                style: const TextStyle(fontSize: 16),
-              ),
-              // Here is where we will add the gauge widget later
+         SleekCircularSlider(
+  min: -100,
+  max: 0,
+  initialValue: _wifiSignalStrength != null && _wifiSignalStrength! > 0
+      ? 0.0 // If signal is positive, set to max for visual
+      : (_wifiSignalStrength?.toDouble() ?? -100),
+  appearance: CircularSliderAppearance(
+    infoProperties: InfoProperties(
+      bottomLabelText: 'dBm',
+      modifier: (double value) => '${value.toInt()}',
+    ),
+    customColors: CustomSliderColors(
+      progressBarColors: _getSignalStrengthColors(_wifiSignalStrength),
+      trackColor: Colors.grey.shade300,
+    ),
+  ),
+  innerWidget: (double value) {
+    return Center(
+      child: Text(
+        '${_wifiSignalStrength?.toInt() ?? -100} dBm', // Display the actual reading
+        style: const TextStyle(fontSize: 18),
+      ),
+    );
+  },
+),
+              const SizedBox(height: 20),
             ],
           ),
         ),
@@ -173,7 +205,7 @@ class _WifiStatusScreenState extends State<WifiStatusScreen> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           _checkWifiStatus();
-          _getWifiSignalStrength(); // Call to refresh signal strength
+          _getWifiSignalStrength();
         },
         tooltip: 'Refresh',
         child: const Icon(Icons.refresh),

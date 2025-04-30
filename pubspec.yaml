@@ -18,6 +18,7 @@ dependencies:
   connectivity_plus: ^5.0.2
   permission_handler: ^11.3.0
   flutter_signal_strength: ^0.0.1
+  sleek_circular_slider: ^2.0.1
 
 dev_dependencies:
   flutter_test:
