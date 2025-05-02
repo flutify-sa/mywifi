@@ -172,12 +172,13 @@ class _WifiStatusScreenState extends State<WifiStatusScreen> {
               const SizedBox(height: 20),
               const HeaderText(text: 'WiFi Signal Strength:'),
               const SizedBox(height: 20),
-         SleekCircularSlider(
+              // display of signal strength
+      SleekCircularSlider(
   min: -100,
-  max: 0,
-  initialValue: _wifiSignalStrength != null && _wifiSignalStrength! > 0
-      ? 0.0 // If signal is positive, set to max for visual
-      : (_wifiSignalStrength?.toDouble() ?? -100),
+  max: 10, // Increased max to accommodate potential positive readings
+  initialValue: _wifiSignalStrength == null
+      ? -100.0
+      : _wifiSignalStrength!.toDouble().clamp(-100, 10),
   appearance: CircularSliderAppearance(
     infoProperties: InfoProperties(
       bottomLabelText: 'dBm',
